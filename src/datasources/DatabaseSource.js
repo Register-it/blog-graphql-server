@@ -6,12 +6,14 @@ class DatabaseSource extends DataSource {
         this.models = models;
     }
 
-    async findAllPosts() {
-        return await this.models.post.findAll({include: [ this.models.author ]});
+    async findAllPosts(include = []) {
+        include = include.map(modelName => this.models[modelName]);
+        return await this.models.post.findAll({include});
     }
 
-    async findById(id) {
-        return await this.models.post.findByPk(id, {include: [ this.models.author ]});
+    async findById(id, include = []) {
+        include = include.map(modelName => this.models[modelName]);
+        return await this.models.post.findByPk(id, {include});
     }
 }
 

@@ -21,8 +21,8 @@ module.exports = gql`
   }
 
   type Query {
-    getPosts: [Post]
-    getPost(id: String!): Post
+    posts: [Post]
+    post(id: String!): Post
   }
 `;
 
