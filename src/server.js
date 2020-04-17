@@ -1,11 +1,8 @@
-const { ApolloServer, gql } = require('apollo-server');
+const { ApolloServer } = require('apollo-server');
 const typeDefs = require('./schema');
-const { merge } = require('lodash');
-const postResolvers = require('./resolvers/post');
+const resolvers = require('./resolvers');
 const models = require('../db/models');
 const DatabaseSource = require('./datasources/DatabaseSource');
-
-const resolvers = {};
 
 const dataSources = () => ({
     db: new DatabaseSource({ models })
@@ -13,7 +10,7 @@ const dataSources = () => ({
 
 const server = new ApolloServer({
     typeDefs, 
-    resolvers: merge(postResolvers, resolvers), 
+    resolvers, 
     dataSources,
     playground: true,
     introspection: true

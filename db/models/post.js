@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   post.associate = function(models) {
     post.belongsTo(models.author);
+    post.belongsToMany(models.tag, { through: 'postTags' });
   };
   return post;
 };

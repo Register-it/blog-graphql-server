@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     displayName: DataTypes.STRING
   }, {});
   author.associate = function(models) {
-    // associations can be defined here
+    
   };
   return author;
 };

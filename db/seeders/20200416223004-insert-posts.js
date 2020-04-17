@@ -5,28 +5,13 @@ const createdAt = new Date(),
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert('authors', [
-      {
-        image: 'https://robohash.org/example1',
-        displayName: 'spyna',
-        createdAt,
-        updatedAt
-      },
-      {
-        image: 'https://robohash.org/example4',
-        displayName: 'pixel13',
-        createdAt,
-        updatedAt
-      },
-    ]);
-    
     const authors = await queryInterface.sequelize.query(
-      `select id from authors;`
+      `select * from authors`, { type: Sequelize.QueryTypes.SELECT }
     );
     
-    return queryInterface.bulkInsert('posts', [
+    await queryInterface.bulkInsert('posts', [
       {
-        authorId: authors[0][0].id,
+        authorId: authors.find(x => x.displayName == 'spyna').id,
         date: new Date(),
         readingTime: 15,
         title: 'Let\'s React to GraphQL!',
@@ -36,7 +21,7 @@ module.exports = {
         updatedAt
       },
       {
-        authorId: authors[0][0].id,
+        authorId: authors.find(x => x.displayName == 'spyna').id,
         date: new Date(),
         readingTime: 5,
         title: 'BBQ Secrets',
@@ -46,7 +31,7 @@ module.exports = {
         updatedAt
       },
       {
-        authorId: authors[0][1].id,
+        authorId: authors.find(x => x.displayName == 'pixel').id,
         date: new Date(),
         readingTime: 5,
         title: 'Climb on Apollo\'s chariot',
@@ -56,7 +41,7 @@ module.exports = {
         updatedAt
       },
       {
-        authorId: authors[0][1].id,
+        authorId: authors.find(x => x.displayName == 'pixel').id,
         date: new Date(),
         readingTime: 120,
         title: 'And sweet to me is sinking in this sea',
@@ -65,12 +50,122 @@ module.exports = {
         createdAt,
         updatedAt
       }
+    ]); 
+
+    const tags = await queryInterface.sequelize.query(
+      `select * from tags`, { type: Sequelize.QueryTypes.SELECT }
+    );
+
+    const posts = await queryInterface.sequelize.query(
+      `select * from posts`, { type: Sequelize.QueryTypes.SELECT }
+    );
+
+    await queryInterface.bulkInsert('reactions', [
+      {
+        postId: posts[0].id,
+        likes: 823,
+        createdAt,
+        updatedAt
+      },
+      {
+        postId: posts[1].id,
+        likes: 78,
+        createdAt,
+        updatedAt
+      },
+      {
+        postId: posts[2].id,
+        likes: 1313,
+        createdAt,
+        updatedAt
+      },
+      {
+        postId: posts[3].id,
+        likes: 8,
+        createdAt,
+        updatedAt
+      }
+    ]);
+
+    return queryInterface.bulkInsert('postTags', [
+      {
+        postId: posts[0].id,
+        tagId: tags.find(x => x.name == 'graphql').id,
+        createdAt,
+        updatedAt
+      },
+      {
+        postId: posts[0].id,
+        tagId: tags.find(x => x.name == 'react').id,
+        createdAt,
+        updatedAt
+      },
+      {
+        postId: posts[0].id,
+        tagId: tags.find(x => x.name == 'Apollo').id,
+        createdAt,
+        updatedAt
+      },
+      {
+        postId: posts[0].id,
+        tagId: tags.find(x => x.name == 'client').id,
+        createdAt,
+        updatedAt
+      },
+      {
+        postId: posts[1].id,
+        tagId: tags.find(x => x.name == 'bbq').id,
+        createdAt,
+        updatedAt
+      },
+      {
+        postId: posts[1].id,
+        tagId: tags.find(x => x.name == 'cooking').id,
+        createdAt,
+        updatedAt
+      },
+      {
+        postId: posts[2].id,
+        tagId: tags.find(x => x.name == 'graphql').id,
+        createdAt,
+        updatedAt
+      },
+      {
+        postId: posts[2].id,
+        tagId: tags.find(x => x.name == 'Apollo').id,
+        createdAt,
+        updatedAt
+      },
+      {
+        postId: posts[2].id,
+        tagId: tags.find(x => x.name == 'server').id,
+        createdAt,
+        updatedAt
+      },
+      {
+        postId: posts[2].id,
+        tagId: tags.find(x => x.name == 'nodejs').id,
+        createdAt,
+        updatedAt
+      },
+      {
+        postId: posts[3].id,
+        tagId: tags.find(x => x.name == 'poetry').id,
+        createdAt,
+        updatedAt
+      },
+      {
+        postId: posts[3].id,
+        tagId: tags.find(x => x.name == 'Italy').id,
+        createdAt,
+        updatedAt
+      }
     ]);
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('posts', null, {}).then(() => {
-      return queryInterface.bulkDelete('authors', null, {});
+    return queryInterface.bulkDelete('postTags', null, {}).then(() => {
+      return queryInterface.bulkDelete('posts', null, {});
     });
   }
 };
