@@ -17,33 +17,38 @@ class DatabaseSource extends DataSource {
         return await this.models.post.findByPk(id, {include});
     }
 
-    async findTagsByPostId(postId) {
+    async findTagsByPostIds(postIds) {
         const tags =  await this.models.tag.findAll({
             include: [{
                 model: this.models.post,
+                attributes: [ 'id' ],
                 required: true,
                 through: {
                     where: {
                         postId: {
-                            [Op.eq]: postId
+                            [Op.in]: postIds
                         }
                     }
                 }
             }]
         });
 
-        return tags.map(tag => tag.name);
+        return postIds.map(postId => 
+            tags.filter(tag => tag.posts.find(post => post.id == postId)).map(tag => tag.name)
+        );
     }
 
-    async findLikesByPostId(postId) {
-        const reaction =  await this.models.reaction.findOne({
-            include: [ this.models.post ],
-            where: {
-                '$post.id$': postId
-            }
+    async findLikesByPostIds(postIds) {
+        const reactions =  await this.models.reaction.findAll({
+            include: [{
+                model: this.models.post,
+                attributes: [ 'id' ]
+            }]
         });
 
-        return reaction.likes;
+        return postIds.map(postId => 
+            reactions.find(reaction => reaction.post.id == postId).likes
+        );
     }
 }
 

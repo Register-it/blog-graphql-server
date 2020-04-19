@@ -3,15 +3,22 @@ const typeDefs = require('./schema');
 const resolvers = require('./resolvers');
 const models = require('../db/models');
 const DatabaseSource = require('./datasources/DatabaseSource');
+const DataLoader = require('dataloader');
 
-const dataSources = () => ({
-    db: new DatabaseSource({ models })
-  });
+const db = new DatabaseSource({ models });
+
+ const context = () => ({
+    tagsLoader: new DataLoader(postIds => db.findTagsByPostIds(postIds)),
+    likesLoader: new DataLoader(postIds => db.findLikesByPostIds(postIds))
+});
 
 const server = new ApolloServer({
     typeDefs, 
     resolvers, 
-    dataSources,
+    context,
+    dataSources: () => ({
+        db
+    }),
     playground: true,
     introspection: true
 });
