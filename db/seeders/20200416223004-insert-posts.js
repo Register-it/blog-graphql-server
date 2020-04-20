@@ -11,7 +11,7 @@ module.exports = {
     
     await queryInterface.bulkInsert('posts', [
       {
-        authorId: authors.find(x => x.displayName == 'spyna').id,
+        authorId: authors.find(x => x.displayName == 'Spyna').id,
         date: new Date(),
         readingTime: 15,
         title: 'Let\'s React to GraphQL!',
@@ -21,7 +21,7 @@ module.exports = {
         updatedAt
       },
       {
-        authorId: authors.find(x => x.displayName == 'spyna').id,
+        authorId: authors.find(x => x.displayName == 'Spyna').id,
         date: new Date(),
         readingTime: 5,
         title: 'BBQ Secrets',
@@ -31,7 +31,7 @@ module.exports = {
         updatedAt
       },
       {
-        authorId: authors.find(x => x.displayName == 'pixel').id,
+        authorId: authors.find(x => x.displayName == 'Pixel').id,
         date: new Date(),
         readingTime: 5,
         title: 'Climb on Apollo\'s chariot',
@@ -41,7 +41,7 @@ module.exports = {
         updatedAt
       },
       {
-        authorId: authors.find(x => x.displayName == 'pixel').id,
+        authorId: authors.find(x => x.displayName == 'Pixel').id,
         date: new Date(),
         readingTime: 120,
         title: 'And sweet to me is sinking in this sea',

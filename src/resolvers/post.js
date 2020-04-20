@@ -10,8 +10,8 @@ module.exports = {
         addLike: (_parent, args, { dataSources }) => dataSources.db.addLike(args.postId)
     },
     Post: {
+        comments: (parent, _args, { commentsLoader }) => commentsLoader.load(parent.id),
         tags: (parent, _args, { tagsLoader }) => tagsLoader.load(parent.id),
-        likes: (parent, _args, { likesLoader }) => likesLoader.load(parent.id),
-        comments: () => []
+        likes: (parent, _args, { likesLoader }) => likesLoader.load(parent.id)
     }
 };

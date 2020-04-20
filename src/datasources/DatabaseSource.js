@@ -49,6 +49,22 @@ class DatabaseSource extends DataSource {
         );
     }
 
+    async findCommentsByPostIds(postIds) {
+        const comments =  await this.models.comment.findAll({
+            include: [
+                {
+                    model: this.models.post,
+                    attributes: [ 'id' ]
+                }, 
+                this.models.author
+            ]
+        });
+
+        return postIds.map(postId => 
+            comments.filter(comment => comment.post.id == postId)
+        );
+    }
+
     async addLike(postId) {
         const reaction = await this.models.reaction.findOne({
             where: {

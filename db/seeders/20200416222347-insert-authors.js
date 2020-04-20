@@ -8,16 +8,40 @@ module.exports = {
     return queryInterface.bulkInsert('authors', [
       {
         image: 'https://robohash.org/example1',
-        displayName: 'spyna',
+        displayName: 'Spyna',
         createdAt,
         updatedAt
       },
       {
         image: 'https://robohash.org/example4',
-        displayName: 'pixel',
+        displayName: 'Pixel',
         createdAt,
         updatedAt
       },
+      {
+        image: 'https://robohash.org/jake',
+        displayName: 'Jake Borrow',
+        createdAt,
+        updatedAt
+      },
+      {
+        image: 'https://robohash.org/pacman',
+        displayName: 'Pac Man',
+        createdAt,
+        updatedAt
+      },
+      {
+        image: 'https://robohash.org/alice',
+        displayName: 'Alice Liddel',
+        createdAt,
+        updatedAt
+      },
+      {
+        image: 'https://robohash.org/bob',
+        displayName: 'Bob',
+        createdAt,
+        updatedAt
+      }
     ]);
   },
 
