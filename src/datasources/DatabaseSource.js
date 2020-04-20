@@ -8,13 +8,11 @@ class DatabaseSource extends DataSource {
     }
 
     async findAllPosts(include = []) {
-        include = include.map(modelName => this.models[modelName]);
-        return await this.models.post.findAll({include});
+        return await this.models.post.findAll({include: this._includedModels(include)});
     }
 
     async findById(id, include = []) {
-        include = include.map(modelName => this.models[modelName]);
-        return await this.models.post.findByPk(id, {include});
+        return await this.models.post.findByPk(id, {include: this._includedModels(include)});
     }
 
     async findTagsByPostIds(postIds) {
@@ -49,6 +47,21 @@ class DatabaseSource extends DataSource {
         return postIds.map(postId => 
             reactions.find(reaction => reaction.post.id == postId).likes
         );
+    }
+
+    async addLike(postId) {
+        const reaction = await this.models.reaction.findOne({
+            where: {
+                postId: postId
+            }
+        });
+        reaction.likes++;
+        await reaction.save();
+        return reaction.likes;
+    }
+
+    _includedModels(include) {
+        return include.map(modelName => this.models[modelName]).filter(model => model);
     }
 }
 

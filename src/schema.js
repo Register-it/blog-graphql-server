@@ -12,6 +12,7 @@ module.exports = gql`
     content: String!
     tags: [String]
     likes: Int
+    comments: [Comment]
   }
   
   type Author {
@@ -20,9 +21,20 @@ module.exports = gql`
     displayName: String!
   }
 
+  type Comment {
+    id: String!
+    date: String!
+    author: Author
+    content: String!
+  }
+
   type Query {
     posts: [Post]
     post(id: String!): Post
+  }
+
+  type Mutation {
+    addLike(postId: String!): Int
   }
 `;
 
