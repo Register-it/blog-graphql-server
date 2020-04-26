@@ -55,6 +55,26 @@ module.exports = {
         name: 'Italy',
         createdAt,
         updatedAt
+      },
+      {
+        name: 'coding',
+        createdAt,
+        updatedAt
+      },
+      {
+        name: 'testing',
+        createdAt,
+        updatedAt
+      },
+      {
+        name: 'covid-19',
+        createdAt,
+        updatedAt
+      },
+      {
+        name: 'programming languages',
+        createdAt,
+        updatedAt
       }
     ]);
   },

@@ -7,8 +7,25 @@ class DatabaseSource extends DataSource {
         this.models = models;
     }
 
-    async findAllPosts(include = []) {
-        return await this.models.post.findAll({include: this._includedModels(include)});
+    async findAllPosts(include = [], first, after) {
+        return await this.models.post.findAll({
+            include: this._includedModels(include),
+            where: {
+                [Op.or]: [
+                    {
+                        date: { [Op.lt]: after.date }
+                    },
+                    {
+                        [Op.and]: [
+                            { date: after.date },
+                            { id : { [Op.lt]: after.id } }
+                        ]
+                    }
+                ]
+            },
+            order: [['date', 'DESC'], ['id', 'DESC']],
+            limit: first
+        });
     }
 
     async findById(id, include = []) {
@@ -28,11 +45,12 @@ class DatabaseSource extends DataSource {
                         }
                     }
                 }
-            }]
+            }],
+            order: [['name']]
         });
 
         return postIds.map(postId => 
-            tags.filter(tag => tag.posts.find(post => post.id == postId)).map(tag => tag.name)
+            tags.filter(tag => tag.posts.find(post => post.id === postId)).map(tag => tag.name)
         );
     }
 
@@ -45,24 +63,34 @@ class DatabaseSource extends DataSource {
         });
 
         return postIds.map(postId => 
-            reactions.find(reaction => reaction.post.id == postId).likes
+            reactions.find(reaction => reaction.post.id === postId).likes
         );
     }
 
-    async findCommentsByPostIds(postIds) {
-        const comments =  await this.models.comment.findAll({
-            include: [
-                {
-                    model: this.models.post,
-                    attributes: [ 'id' ]
-                }, 
-                this.models.author
-            ]
+    async findCommentsByPostId(postId, first, after) {
+        return await this.models.comment.findAll({
+            include: [ this.models.author ],
+            where: {
+                [Op.and]: [
+                    { postId: postId },
+                    {
+                        [Op.or]: [
+                            {
+                                date: { [Op.lt]: after.date }
+                            },
+                            {
+                                [Op.and]: [
+                                    { date: after.date },
+                                    { id : { [Op.lt]: after.id } }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            order: [['date', 'DESC'], ['id', 'DESC']],
+            limit: first
         });
-
-        return postIds.map(postId => 
-            comments.filter(comment => comment.post.id == postId)
-        );
     }
 
     async addLike(postId) {

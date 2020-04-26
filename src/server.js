@@ -9,8 +9,7 @@ const db = new DatabaseSource({ models });
 
  const context = () => ({
     tagsLoader: new DataLoader(postIds => db.findTagsByPostIds(postIds)),
-    likesLoader: new DataLoader(postIds => db.findLikesByPostIds(postIds)),
-    commentsLoader: new DataLoader(postIds => db.findCommentsByPostIds(postIds))
+    likesLoader: new DataLoader(postIds => db.findLikesByPostIds(postIds))
 });
 
 const server = new ApolloServer({
