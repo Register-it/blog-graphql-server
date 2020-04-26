@@ -42,7 +42,39 @@ module.exports = {
         postId: posts.find(x => x.title === 'BBQ Secrets').id,
         authorId: authors.find(x => x.displayName == 'Alice Liddel').id,
         content: 'The secret is the BBQ sauce!',
-        date: new Date('2020-04-30'),
+        date: new Date('2020-04-25'),
+        createdAt,
+        updatedAt
+      },
+      {
+        postId: posts.find(x => x.title === 'BBQ Secrets').id,
+        authorId: authors.find(x => x.displayName == 'Bob').id,
+        content: 'It looks delicious...',
+        date: new Date('2020-04-25'),
+        createdAt,
+        updatedAt
+      },
+      {
+        postId: posts.find(x => x.title === 'BBQ Secrets').id,
+        authorId: authors.find(x => x.displayName == 'Pixel').id,
+        content: 'Stop with theory, let\'s practice!',
+        date: new Date('2020-04-26'),
+        createdAt,
+        updatedAt
+      },
+      {
+        postId: posts.find(x => x.title === 'BBQ Secrets').id,
+        authorId: authors.find(x => x.displayName == 'Pac Man').id,
+        content: 'Too much meat isn\'t good for your health!',
+        date: new Date('2020-04-26'),
+        createdAt,
+        updatedAt
+      },
+      {
+        postId: posts.find(x => x.title === 'BBQ Secrets').id,
+        authorId: authors.find(x => x.displayName == 'Spyna').id,
+        content: '...And with a little salt it\'s even better!',
+        date: new Date('2020-04-26'),
         createdAt,
         updatedAt
       },
