@@ -11,35 +11,9 @@ module.exports = {
       after,
     }),
 
-    post: (_parent, args, { dataSources }, info) => dataSources.db.findPostById(args.id, getIncludedObjects(info)),
-
-    comments: (_parent, { postId, first = 5, after }, { dataSources }) => paginateByDateAndId({
-      dataSource: dataSources.db,
-      method: 'findCommentsByPostId',
-      args: [postId],
-      first,
-      after,
-    }),
-  },
-  Mutation: {
-    addLike: (_parent, { postId }, { dataSources }) => dataSources.db.addLike(postId),
-    addComment: (_parent, { postId, comment }, { dataSources }) => dataSources.db.addComment(postId, comment),
+    post: (_parent, { id }, { dataSources }, info) => dataSources.db.findPostById(id, getIncludedObjects(info)),
   },
   Post: {
-    date: ({ date }) => date.toISOString(),
-
-    comments: (parent, { first = 5, after }, { dataSources }) => paginateByDateAndId({
-      dataSource: dataSources.db,
-      method: 'findCommentsByPostId',
-      args: [parent.id],
-      first,
-      after,
-    }),
-
-    tags: (parent, _args, { tagsLoader }) => tagsLoader.load(parent.id),
-    likes: (parent, _args, { likesLoader }) => likesLoader.load(parent.id),
-  },
-  Comment: {
     date: ({ date }) => date.toISOString(),
   },
 };

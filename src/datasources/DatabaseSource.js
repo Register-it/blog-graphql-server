@@ -7,7 +7,7 @@ class DatabaseSource extends DataSource {
     this.models = models;
   }
 
-  async findAllPosts(include = [], first, after) {
+  async findAllPosts(include, first, after) {
     return this.models.post.findAll({
       include: this.includedModels(include),
       where: {

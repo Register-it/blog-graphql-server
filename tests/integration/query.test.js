@@ -1,8 +1,5 @@
 const { createTestClient } = require('apollo-server-testing');
-const { ApolloServer } = require('apollo-server');
-const typeDefs = require('@src/schema');
-const resolvers = require('@src/resolvers');
-const DataLoader = require('dataloader');
+const createServer = require('@src/server');
 const { assertPostEquals, assertCommentEquals } = require('./utils');
 const queries = require('./queries');
 const { getTestPosts, getTestComments } = require('./testData');
@@ -15,22 +12,7 @@ const db = {
   findPostById: jest.fn(),
 };
 
-const context = () => ({
-  tagsLoader: new DataLoader((postIds) => db.findTagsByPostIds(postIds)),
-  likesLoader: new DataLoader((postIds) => db.findLikesByPostIds(postIds)),
-});
-
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  context,
-  dataSources: () => ({
-    db,
-  }),
-  playground: true,
-  introspection: true,
-});
-
+const server = createServer(db);
 const { query } = createTestClient(server);
 
 it('returns an empty list if no posts are present', async () => {
@@ -46,7 +28,7 @@ it('returns an empty list if no posts are present', async () => {
   expect(db.findAllPosts.mock.calls[0][0].include).toEqual(expect.not.arrayContaining(['author']));
 });
 
-it('fetches a list of posts with no boundaries and requiring basic data', async () => {
+it('fetches a list of posts requiring basic data', async () => {
   const expected = getTestPosts(2);
   db.findAllPosts.mockResolvedValueOnce(expected);
 
@@ -63,7 +45,7 @@ it('fetches a list of posts with no boundaries and requiring basic data', async 
   expect(mockCall[1]).toEqual(6);
 });
 
-it('paginate the posts by 5 if no page size is given', async () => {
+it('paginate the posts with default size if no page size is given', async () => {
   const expected = getTestPosts(7);
   db.findAllPosts.mockResolvedValueOnce(expected.slice(0, 6))
     .mockResolvedValueOnce(expected.slice(5));
