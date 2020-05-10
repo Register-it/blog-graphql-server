@@ -1,7 +1,7 @@
 'use strict';
 
-const createdAt = new Date(), 
-      updatedAt = new Date();
+const createdAt = new Date();
+const updatedAt = new Date();
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
@@ -9,77 +9,77 @@ module.exports = {
       {
         name: 'graphql',
         createdAt,
-        updatedAt
+        updatedAt,
       },
       {
         name: 'react',
         createdAt,
-        updatedAt
+        updatedAt,
       },
       {
         name: 'bbq',
         createdAt,
-        updatedAt
+        updatedAt,
       },
       {
         name: 'cooking',
         createdAt,
-        updatedAt
+        updatedAt,
       },
       {
         name: 'Apollo',
         createdAt,
-        updatedAt
+        updatedAt,
       },
       {
         name: 'client',
         createdAt,
-        updatedAt
+        updatedAt,
       },
       {
         name: 'server',
         createdAt,
-        updatedAt
+        updatedAt,
       },
       {
         name: 'nodejs',
         createdAt,
-        updatedAt
+        updatedAt,
       },
       {
         name: 'poetry',
         createdAt,
-        updatedAt
+        updatedAt,
       },
       {
         name: 'Italy',
         createdAt,
-        updatedAt
+        updatedAt,
       },
       {
         name: 'coding',
         createdAt,
-        updatedAt
+        updatedAt,
       },
       {
         name: 'testing',
         createdAt,
-        updatedAt
+        updatedAt,
       },
       {
         name: 'covid-19',
         createdAt,
-        updatedAt
+        updatedAt,
       },
       {
         name: 'programming languages',
         createdAt,
-        updatedAt
-      }
+        updatedAt,
+      },
     ]);
   },
 
   down: (queryInterface, Sequelize) => {
     return queryInterface.bulkDelete('tags', null, {});
-  }
+  },
 };

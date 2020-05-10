@@ -19,19 +19,48 @@
   },
   "license": "MIT",
   "dependencies": {
+    "apollo-datasource": "^0.7.0",
     "apollo-server": "^2.11.0",
     "dataloader": "^2.0.0",
     "graphql": "^15.0.0",
     "graphql-fields": "^2.0.3",
     "lodash": "^4.17.15",
+    "module-alias": "^2.2.2",
     "sequelize": "^5.21.6",
     "sqlite3": "^4.1.1"
   },
   "devDependencies": {
+    "apollo-server-testing": "^2.13.0",
+    "core-js": "^3.6.5",
+    "eslint": "^7.0.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-plugin-import": "^2.20.2",
     "jest": "^25.4.0",
     "sequelize-cli": "^5.5.1"
   },
   "engines": {
     "node": ">=10.x"
+  },
+  "_moduleAliases": {
+    "@root": ".",
+    "@src": "./src"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^@root/(.*)$": "<rootDir>/$1",
+      "^@src/(.*)$": "<rootDir>/src/$1"
+    },
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 90,
+        "functions": 90,
+        "lines": 90,
+        "statements": 90
+      }
+    }
   }
 }

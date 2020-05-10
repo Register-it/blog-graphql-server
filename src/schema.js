@@ -32,7 +32,7 @@ module.exports = gql`
   "the author of a post or a comment"
   type Author {
     id: String!
-    image: String!
+    image: String
     displayName: String!
   }
 
@@ -44,6 +44,12 @@ module.exports = gql`
     content: String!
   }
 
+  "input type for a comment"
+  input CommentInput {
+    authorDisplayName: String!
+    content: String!
+  }
+
   type Query {
     posts(first: Int, after: String): PostConnection!
     post(id: String!): Post,
@@ -52,6 +58,6 @@ module.exports = gql`
 
   type Mutation {
     addLike(postId: String!): Int
+    addComment(postId: String!, comment: CommentInput!): Comment
   }
 `;
-
