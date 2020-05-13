@@ -208,7 +208,7 @@ it('adds a comment to a post', async () => {
   models.comment.create.mockResolvedValueOnce(expected);
 
   const testing = new DatabaseSource({ models });
-  const results = await testing.addComment(234, { authorDisplayName: 'testAuthor', content: 'testContent' });
+  const results = await testing.addComment(234, { displayName: 'testAuthor', image: 'image' }, 'testContent');
 
   expect(results).toBe(expected);
 
@@ -218,6 +218,7 @@ it('adds a comment to a post', async () => {
   expect(argument.postId).toBe(234);
   expect(argument.content).toBe('testContent');
   expect(argument.author.displayName).toBe('testAuthor');
+  expect(argument.author.image).toBe('image');
 });
 
 afterEach(() => {

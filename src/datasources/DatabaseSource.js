@@ -103,14 +103,12 @@ class DatabaseSource extends DataSource {
     return reaction.likes;
   }
 
-  async addComment(postId, { content, authorDisplayName }) {
+  async addComment(postId, author, content) {
     return this.models.comment.create({
       postId,
       date: new Date(),
       content,
-      author: {
-        displayName: authorDisplayName,
-      },
+      author,
     }, {
       include: [this.models.author],
     });

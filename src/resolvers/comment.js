@@ -11,7 +11,14 @@ module.exports = {
     }),
   },
   Mutation: {
-    addComment: (_parent, { postId, comment }, { dataSources }) => dataSources.db.addComment(postId, comment),
+    addComment: (_parent, { postId, comment }, { dataSources }) => {
+      const displayName = comment.authorDisplayName;
+      const author = {
+        displayName,
+        image: `https://robohash.org/${displayName.replace(/\s/, '%20')}`,
+      };
+      return dataSources.db.addComment(postId, author, comment.content);
+    },
   },
   Post: {
     comments: (parent, { first = 5, after }, { dataSources }) => paginateByDateAndId({

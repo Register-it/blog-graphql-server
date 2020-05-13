@@ -11,6 +11,7 @@ const ADD_COMMENT = gql`
     addComment(postId: $postId, comment: { authorDisplayName: $authorName, content: $content }) {
       id
       author {
+        image
         displayName
       }
       date

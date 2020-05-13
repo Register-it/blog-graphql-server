@@ -25,12 +25,14 @@ it('adds a like to a post', async () => {
 it('adds a comment to a post', async () => {
   const postId = '123';
   const authorName = 'Test Author';
+  const image = 'https://robohash.org/Test%20Author';
   const content = 'This is the content of the comment';
   const comment = {
     id: 42,
     date: new Date(),
     content,
     author: {
+      image,
       displayName: authorName,
     },
   };
@@ -42,7 +44,7 @@ it('adds a comment to a post', async () => {
   assertCommentEquals(comment, res.data.addComment);
 
   expect(db.addComment).toHaveBeenCalledTimes(1);
-  expect(db.addComment).toHaveBeenCalledWith(postId, { authorDisplayName: authorName, content });
+  expect(db.addComment).toHaveBeenCalledWith(postId, { displayName: authorName, image }, content);
 });
 
 afterEach(() => {
