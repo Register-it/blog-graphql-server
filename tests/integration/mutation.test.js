@@ -9,12 +9,12 @@ const db = {
 };
 
 const server = createServer(db);
-const { query } = createTestClient(server);
+const { mutate } = createTestClient(server);
 
 it('adds a like to a post', async () => {
   db.addLike.mockResolvedValueOnce(13);
 
-  const res = await query({ query: mutations.ADD_LIKE, variables: { postId: '123' } });
+  const res = await mutate({ query: mutations.ADD_LIKE, variables: { postId: '123' } });
 
   expect(res.data.addLike).toBe(13);
 
@@ -39,7 +39,7 @@ it('adds a comment to a post', async () => {
 
   db.addComment.mockResolvedValueOnce(comment);
 
-  const res = await query({ query: mutations.ADD_COMMENT, variables: { postId, authorName, content } });
+  const res = await mutate({ query: mutations.ADD_COMMENT, variables: { postId, authorName, content } });
 
   assertCommentEquals(comment, res.data.addComment);
 

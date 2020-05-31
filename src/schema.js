@@ -60,4 +60,9 @@ module.exports = gql`
     addLike(postId: String!): Int
     addComment(postId: String!, comment: CommentInput!): Comment
   }
+
+  type Subscription {
+    likeAdded(postId: String!): Int
+    commentAdded(postId: String!): Comment
+  }
 `;

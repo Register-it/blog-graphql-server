@@ -1,5 +1,5 @@
-const getIncludedObjects = require('../utils/getIncludedObjects');
-const { paginateByDateAndId } = require('../utils/pagination');
+const getIncludedObjects = require('@src/utils/getIncludedObjects');
+const { paginateByDateAndId } = require('@src/utils/pagination');
 
 module.exports = {
   Query: {
